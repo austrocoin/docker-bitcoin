@@ -15,10 +15,13 @@ ENV BITCOIN_SHA256 3571e9e085a6a295a4f8602ec1eaed39bdd8234657fcf060bd9bb41540deb
 # install bitcoin binaries
 RUN set -ex \
 	&& cd /tmp \
-	&& wget -qO bitcoin.tar.gz "$BITCOIN_URL" \
+	&& wget https://github.com/dogecoin/dogecoin/releases/download/v1.10.0/dogecoin-1.10.0-linux64.tar.gz
 	&& echo "$BITCOIN_SHA256 bitcoin.tar.gz" | sha256sum -c - \
-	&& tar -xzvf bitcoin.tar.gz -C /usr/local --strip-components=1 --exclude=*-qt \
+	&& tar -xzvf dogecoin-1.10.0-linux64.tar.gz
+	&& chmod +x dogecoin-1.10.0/bin/dogecoind dogecoin-1.10.0/bin/dogecoin-cli
+	&& ln -s /usr/local/src/dogecoin-1.10.0/bin/dogecoind /usr/local/bin/dogecoind
 	&& rm -rf /tmp/*
+	
 
 # create data directory
 ENV BITCOIN_DATA /data
