@@ -7,20 +7,17 @@ RUN set -ex \
 	&& apt-get install -qq --no-install-recommends ca-certificates dirmngr gosu gpg wget \
 	&& rm -rf /var/lib/apt/lists/*
 
-ENV BITCOIN_VERSION 1.10.0
-ENV BITCOIN_URL https://github.com/dogecoin/dogecoin/releases/download/v1.10.0/dogecoin-1.10.0-linux64.tar.gz
-ENV BITCOIN_SHA256 3571e9e085a6a295a4f8602ec1eaed39bdd8234657fcf060bd9bb41540debfc9
 
 
 # install bitcoin binaries
-RUN set -ex \
-	&& cd /tmp \
-	&& wget https://github.com/dogecoin/dogecoin/releases/download/v1.10.0/dogecoin-1.10.0-linux64.tar.gz
-	&& echo "$BITCOIN_SHA256 bitcoin.tar.gz" | sha256sum -c - \
-	&& tar -xzvf dogecoin-1.10.0-linux64.tar.gz
-	&& chmod +x dogecoin-1.10.0/bin/dogecoind dogecoin-1.10.0/bin/dogecoin-cli
-	&& ln -s /usr/local/src/dogecoin-1.10.0/bin/dogecoind /usr/local/bin/dogecoind
-	&& rm -rf /tmp/*
+WORKDIR /usr/local/src
+RUN wget https://github.com/dogecoin/dogecoin/releases/download/v1.10.0/dogecoin-1.10.0-linux64.tar.gz
+RUN tar -xzvf dogecoin-1.10.0-linux64.tar.gz
+RUN chmod +x dogecoin-1.10.0/bin/dogecoind dogecoin-1.10.0/bin/dogecoin-cli
+RUN ln -s /usr/local/src/dogecoin-1.10.0/bin/dogecoind /usr/local/bin/dogecoind
+RUN ln -s /usr/local/src/dogecoin-1.10.0/bin/dogecoin-cli /usr/local/bin/dogecoin-cli
+
+ADD dogecoin.conf /home/bitcoin/.dogecoin/dogecoin.conf
 	
 
 # create data directory
