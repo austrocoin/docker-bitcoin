@@ -1,21 +1,21 @@
-FROM debian:stretch-slim
+FROM ubuntu:14.04
 
+
+RUN apt-get update
+RUN dpkg-reconfigure locales && \
+    locale-gen en_US.UTF-8 && \
+    /usr/sbin/update-locale LANG=en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+RUN apt-get -y install wget vim unzip vim unzip
 RUN groupadd -r bitcoin && useradd -r -m -g bitcoin bitcoin
 
-RUN set -ex \
-	&& apt-get update \
-	&& apt-get install -qq --no-install-recommends ca-certificates dirmngr gosu gpg wget \
-	&& rm -rf /var/lib/apt/lists/*
-
-
-
-# install bitcoin binaries
 WORKDIR /usr/local/src
 RUN wget https://github.com/dogecoin/dogecoin/releases/download/v1.10.0/dogecoin-1.10.0-linux64.tar.gz
 RUN tar -xzvf dogecoin-1.10.0-linux64.tar.gz
 RUN chmod +x dogecoin-1.10.0/bin/dogecoind dogecoin-1.10.0/bin/dogecoin-cli
 RUN ln -s /usr/local/src/dogecoin-1.10.0/bin/dogecoind /usr/local/bin/dogecoind
 RUN ln -s /usr/local/src/dogecoin-1.10.0/bin/dogecoin-cli /usr/local/bin/dogecoin-cli
+
 
 	
 
