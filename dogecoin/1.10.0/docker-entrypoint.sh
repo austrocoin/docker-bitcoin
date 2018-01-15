@@ -14,9 +14,9 @@ if [[ "$1" == "dogecoin-cli" || "$1" == "dogecoin-tx" || "$1" == "dogecoind" || 
 	# ensure correct ownership and linking of data directory
 	# we do not update group ownership here, in case users want to mount
 	# a host directory and still retain access to it
-	chown -R bitcoin "$BITCOIN_DATA"
-	ln -sfn "$BITCOIN_DATA" /home/bitcoin/.dogecoin
-	chown -h bitcoin:bitcoin /home/bitcoin/.dogecoin
+	chown -R dogecoin "$BITCOIN_DATA"
+	ln -sfn "$BITCOIN_DATA" /home/dogecoin/.dogecoin
+	chown -h bitcoin:bitcoin /home/dogecoin/.dogecoin
 
 	exec gosu bitcoin "$@"
 else
