@@ -23,8 +23,8 @@ RUN ln -s /usr/local/src/dogecoin-1.10.0/bin/dogecoin-cli /usr/local/bin/dogecoi
 ENV BITCOIN_DATA /data
 RUN mkdir "$BITCOIN_DATA" \
 	&& chown -R bitcoin:bitcoin "$BITCOIN_DATA" \
-	&& ln -sfn "$BITCOIN_DATA" /dogecoin/.dogecoin \
-	&& chown -h bitcoin:bitcoin /dogecoin/.dogecoin
+	&& ln -sfn "$BITCOIN_DATA" /home/bitcoin/.dogecoin \
+	&& chown -h bitcoin:bitcoin /home/bitcoin/.dogecoin
 VOLUME /data
 
 COPY docker-entrypoint.sh /entrypoint.sh
