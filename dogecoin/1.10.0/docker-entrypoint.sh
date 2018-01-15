@@ -9,16 +9,16 @@ if [[ "$1" == "dogecoin-cli" || "$1" == "dogecoin-tx" || "$1" == "dogecoind" || 
 	rpcallowip=::/0
 	${BITCOIN_EXTRA_ARGS}
 	EOF
-	chown bitcoin:bitcoin "$BITCOIN_DATA/dogecoin.conf"
+	chown dogecoin:dogecoin "$BITCOIN_DATA/dogecoin.conf"
 
 	# ensure correct ownership and linking of data directory
 	# we do not update group ownership here, in case users want to mount
 	# a host directory and still retain access to it
 	chown -R dogecoin "$BITCOIN_DATA"
 	ln -sfn "$BITCOIN_DATA" /dogecoin/.dogecoin
-	chown -h bitcoin:bitcoin /dogecoin/.dogecoin
+	chown -h dogecoin:dogecoin /dogecoin/.dogecoin
 
-	exec gosu bitcoin "$@"
+	exec gosu dogecoin "$@"
 else
 	exec "$@"
 fi
