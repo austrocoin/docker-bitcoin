@@ -30,5 +30,5 @@ VOLUME /data
 COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
-EXPOSE 9332 9333 19335 19332 19444 19332
+EXPOSE 22555 22556
 CMD ["dogecoind"]
